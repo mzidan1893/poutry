@@ -41,6 +41,84 @@
             overflow-x: hidden;
         }
 
+        /* ===== PRELOADER ===== */
+        .preloader {
+            position: fixed;
+            inset: 0;
+            z-index: 99999;
+            background: var(--dark);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: 20px;
+            transition: opacity 0.6s, visibility 0.6s;
+        }
+
+        .preloader.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .preloader-icon {
+            font-size: 4rem;
+            animation: preloaderBounce 1s ease infinite;
+        }
+
+        @keyframes preloaderBounce {
+
+            0%,
+            100% {
+                transform: translateY(0) scale(1);
+            }
+
+            50% {
+                transform: translateY(-15px) scale(1.1);
+            }
+        }
+
+        .preloader-bar {
+            width: 200px;
+            height: 4px;
+            background: var(--dark-3);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .preloader-bar::after {
+            content: '';
+            display: block;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(90deg, var(--gold), var(--gold-light));
+            border-radius: 10px;
+            animation: preloaderSlide 1s ease infinite;
+        }
+
+        @keyframes preloaderSlide {
+            0% {
+                transform: translateX(-100%);
+            }
+
+            100% {
+                transform: translateX(300%);
+            }
+        }
+
+        .preloader-text {
+            color: var(--gold-light);
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+
+        /* ===== PARTICLES ===== */
+        .particles-canvas {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+        }
+
         /* ===== HEADER ===== */
         header {
             position: fixed;
@@ -48,14 +126,23 @@
             left: 0;
             right: 0;
             z-index: 1000;
-            background: rgba(10, 22, 40, 0.95);
-            backdrop-filter: blur(12px);
-            border-bottom: 1px solid rgba(200, 149, 42, 0.3);
+            background: rgba(10, 22, 40, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(200, 149, 42, 0.2);
             padding: 0 2rem;
             height: 70px;
             display: flex;
             align-items: center;
             justify-content: space-between;
+            transition: all 0.4s ease;
+        }
+
+        header.scrolled {
+            background: rgba(10, 22, 40, 0.98);
+            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.4);
+            border-bottom-color: rgba(200, 149, 42, 0.4);
+            height: 64px;
         }
 
         .logo-area {
@@ -74,6 +161,11 @@
             justify-content: center;
             font-size: 24px;
             box-shadow: 0 4px 20px rgba(200, 149, 42, 0.4);
+            transition: transform 0.3s;
+        }
+
+        .logo-icon:hover {
+            transform: rotate(10deg) scale(1.05);
         }
 
         .logo-text {
@@ -94,17 +186,40 @@
         nav {
             display: flex;
             gap: 24px;
-            }
+        }
 
         nav a {
             color: var(--text-muted);
             text-decoration: none;
             font-size: 0.88rem;
             font-weight: 500;
-            transition: color 0.3s;
+            transition: all 0.3s;
+            position: relative;
+            padding: 4px 0;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            right: 0;
+            width: 0;
+            height: 2px;
+            background: var(--gold-light);
+            transition: width 0.3s ease;
+            border-radius: 2px;
         }
 
         nav a:hover {
+            color: var(--gold-light);
+        }
+
+        nav a:hover::after,
+        nav a.active::after {
+            width: 100%;
+        }
+
+        nav a.active {
             color: var(--gold-light);
         }
 
@@ -125,6 +240,96 @@
         .header-cta:hover {
             transform: translateY(-2px);
             box-shadow: 0 8px 25px rgba(200, 149, 42, 0.5);
+        }
+
+        /* ===== HAMBURGER ===== */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            padding: 8px;
+            z-index: 1100;
+            background: none;
+            border: none;
+        }
+
+        .hamburger span {
+            width: 26px;
+            height: 2.5px;
+            background: var(--gold-light);
+            border-radius: 3px;
+            transition: all 0.35s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            transform-origin: center;
+        }
+
+        .hamburger.open span:nth-child(1) {
+            transform: translateY(7.5px) rotate(45deg);
+        }
+
+        .hamburger.open span:nth-child(2) {
+            opacity: 0;
+            transform: scaleX(0);
+        }
+
+        .hamburger.open span:nth-child(3) {
+            transform: translateY(-7.5px) rotate(-45deg);
+        }
+
+        /* Mobile Menu */
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 300px;
+            height: 100vh;
+            background: rgba(10, 22, 40, 0.98);
+            backdrop-filter: blur(20px);
+            z-index: 1050;
+            display: flex;
+            flex-direction: column;
+            padding: 100px 30px 40px;
+            gap: 0;
+            transition: right 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            border-left: 1px solid rgba(200, 149, 42, 0.2);
+            box-shadow: -10px 0 40px rgba(0, 0, 0, 0.5);
+        }
+
+        .mobile-menu.open {
+            right: 0;
+        }
+
+        .mobile-menu a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 1.05rem;
+            font-weight: 600;
+            padding: 16px 0;
+            border-bottom: 1px solid rgba(200, 149, 42, 0.1);
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .mobile-menu a:hover {
+            color: var(--gold-light);
+            padding-right: 10px;
+        }
+
+        .mobile-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 1040;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s;
+        }
+
+        .mobile-overlay.show {
+            opacity: 1;
+            visibility: visible;
         }
 
         /* ===== HERO ===== */
@@ -150,9 +355,72 @@
             position: absolute;
             inset: 0;
             background-image:
-                linear-gradient(rgba(200, 149, 42, 0.06) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(200, 149, 42, 0.06) 1px, transparent 1px);
+                linear-gradient(rgba(200, 149, 42, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(200, 149, 42, 0.05) 1px, transparent 1px);
             background-size: 60px 60px;
+            animation: gridMove 20s linear infinite;
+        }
+
+        @keyframes gridMove {
+            0% {
+                transform: translate(0, 0);
+            }
+
+            100% {
+                transform: translate(60px, 60px);
+            }
+        }
+
+        /* Floating orbs */
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(60px);
+            opacity: 0.3;
+            animation: orbFloat 8s ease-in-out infinite;
+        }
+
+        .orb-1 {
+            width: 300px;
+            height: 300px;
+            background: var(--gold);
+            top: 10%;
+            right: 10%;
+            animation-delay: 0s;
+        }
+
+        .orb-2 {
+            width: 200px;
+            height: 200px;
+            background: var(--accent);
+            bottom: 20%;
+            left: 10%;
+            animation-delay: 3s;
+        }
+
+        .orb-3 {
+            width: 150px;
+            height: 150px;
+            background: #9b59b6;
+            top: 60%;
+            right: 30%;
+            animation-delay: 5s;
+        }
+
+        @keyframes orbFloat {
+
+            0%,
+            100% {
+                transform: translate(0, 0) scale(1);
+            }
+
+            33% {
+                transform: translate(20px, -30px) scale(1.05);
+            }
+
+            66% {
+                transform: translate(-15px, 20px) scale(0.95);
+            }
         }
 
         .hero-content {
@@ -178,7 +446,28 @@
             font-size: 0.8rem;
             color: var(--gold-light);
             margin-bottom: 20px;
-            animation: fadeInDown 0.8s ease;
+        }
+
+        .hero-badge .badge-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--green);
+            border-radius: 50%;
+            animation: dotPulse 2s ease infinite;
+        }
+
+        @keyframes dotPulse {
+
+            0%,
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+
+            50% {
+                opacity: 0.5;
+                transform: scale(1.4);
+            }
         }
 
         .hero-title {
@@ -187,11 +476,23 @@
             font-weight: 900;
             line-height: 1.2;
             margin-bottom: 20px;
-            animation: fadeInDown 0.9s ease;
         }
 
         .hero-title .gold {
             color: var(--gold-light);
+            position: relative;
+        }
+
+        .hero-title .gold::after {
+            content: '';
+            position: absolute;
+            bottom: 4px;
+            right: 0;
+            width: 100%;
+            height: 8px;
+            background: rgba(200, 149, 42, 0.25);
+            border-radius: 4px;
+            z-index: -1;
         }
 
         .hero-desc {
@@ -199,14 +500,12 @@
             font-size: 1rem;
             line-height: 1.8;
             margin-bottom: 32px;
-            animation: fadeInDown 1s ease;
         }
 
         .hero-btns {
             display: flex;
             gap: 16px;
             flex-wrap: wrap;
-            animation: fadeInDown 1.1s ease;
         }
 
         .btn-primary {
@@ -219,9 +518,27 @@
             padding: 14px 28px;
             border-radius: 12px;
             font-weight: 700;
+            font-family: 'Cairo', sans-serif;
             font-size: 0.95rem;
             transition: all 0.3s;
             box-shadow: 0 6px 25px rgba(37, 211, 102, 0.35);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.6s;
+        }
+
+        .btn-primary:hover::before {
+            left: 100%;
         }
 
         .btn-primary:hover {
@@ -240,6 +557,7 @@
             padding: 14px 28px;
             border-radius: 12px;
             font-weight: 600;
+            font-family: 'Cairo', sans-serif;
             font-size: 0.95rem;
             cursor: pointer;
             transition: all 0.3s;
@@ -250,12 +568,11 @@
             transform: translateY(-3px);
         }
 
-        /* Hero visual */
+        /* Hero Visual */
         .hero-visual {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 14px;
-            animation: fadeInRight 1s ease;
         }
 
         .animal-card {
@@ -264,9 +581,10 @@
             border-radius: 16px;
             padding: 20px;
             text-align: center;
-            transition: all 0.3s;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             position: relative;
             overflow: hidden;
+            cursor: pointer;
         }
 
         .animal-card::before {
@@ -277,12 +595,28 @@
             right: 0;
             height: 2px;
             background: linear-gradient(90deg, transparent, var(--gold), transparent);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .animal-card::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at center, rgba(200, 149, 42, 0.08) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.3s;
         }
 
         .animal-card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-8px) scale(1.02);
             border-color: rgba(200, 149, 42, 0.5);
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+        }
+
+        .animal-card:hover::before,
+        .animal-card:hover::after {
+            opacity: 1;
         }
 
         .animal-card.wide {
@@ -292,18 +626,63 @@
         .animal-emoji {
             font-size: 2.5rem;
             margin-bottom: 8px;
+            display: inline-block;
+            transition: transform 0.3s;
+        }
+
+        .animal-card:hover .animal-emoji {
+            transform: scale(1.2) rotate(-5deg);
         }
 
         .animal-name {
             font-weight: 700;
             font-size: 0.95rem;
             color: var(--gold-light);
+            position: relative;
+            z-index: 1;
         }
 
         .animal-desc {
             font-size: 0.75rem;
             color: var(--text-muted);
             margin-top: 4px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ===== MARQUEE ===== */
+        .marquee-bar {
+            background: linear-gradient(135deg, var(--gold), var(--gold-light));
+            padding: 10px 0;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .marquee-track {
+            display: flex;
+            gap: 40px;
+            animation: marqueeScroll 25s linear infinite;
+            width: max-content;
+        }
+
+        .marquee-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--dark);
+            font-weight: 700;
+            font-size: 0.85rem;
+            white-space: nowrap;
+        }
+
+        @keyframes marqueeScroll {
+            0% {
+                transform: translateX(0);
+            }
+
+            100% {
+                transform: translateX(-50%);
+            }
         }
 
         /* ===== STATS ===== */
@@ -311,7 +690,8 @@
             background: linear-gradient(135deg, var(--dark-2), var(--dark-3));
             border-top: 1px solid rgba(200, 149, 42, 0.2);
             border-bottom: 1px solid rgba(200, 149, 42, 0.2);
-            padding: 40px 2rem;
+            padding: 50px 2rem;
+            position: relative;
         }
 
         .stats-inner {
@@ -324,15 +704,33 @@
         }
 
         .stat-item {
-            padding: 20px;
+            padding: 24px;
+            border-radius: 16px;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .stat-item:hover {
+            background: rgba(200, 149, 42, 0.08);
+            transform: translateY(-4px);
+        }
+
+        .stat-icon {
+            font-size: 1.8rem;
+            margin-bottom: 8px;
         }
 
         .stat-number {
             font-family: 'Tajawal', sans-serif;
-            font-size: 2.5rem;
+            font-size: 2.8rem;
             font-weight: 900;
             color: var(--gold-light);
             line-height: 1;
+        }
+
+        .stat-number .plus {
+            font-size: 1.5rem;
+            color: var(--gold);
         }
 
         .stat-label {
@@ -341,9 +739,21 @@
             margin-top: 6px;
         }
 
+        /* Divider between stats */
+        .stat-item:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 20%;
+            height: 60%;
+            width: 1px;
+            background: rgba(200, 149, 42, 0.2);
+        }
+
         /* ===== SECTIONS ===== */
         section {
             padding: 80px 2rem;
+            position: relative;
         }
 
         .container {
@@ -358,8 +768,8 @@
 
         .section-tag {
             display: inline-block;
-            background: rgba(200, 149, 42, 0.15);
-            border: 1px solid rgba(200, 149, 42, 0.3);
+            background: rgba(200, 149, 42, 0.12);
+            border: 1px solid rgba(200, 149, 42, 0.25);
             color: var(--gold);
             font-size: 0.78rem;
             font-weight: 700;
@@ -388,6 +798,82 @@
             margin: 0 auto;
         }
 
+        /* ===== WHY US ===== */
+        #why-us {
+            background: var(--dark);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .feature-card {
+            background: var(--dark-2);
+            border: 1px solid rgba(200, 149, 42, 0.12);
+            border-radius: 20px;
+            padding: 32px 24px;
+            text-align: center;
+            transition: all 0.4s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(200, 149, 42, 0.05) 0%, transparent 50%);
+            opacity: 0;
+            transition: opacity 0.4s;
+        }
+
+        .feature-card:hover::before {
+            opacity: 1;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(200, 149, 42, 0.4);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+        }
+
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            background: rgba(200, 149, 42, 0.12);
+            border: 1px solid rgba(200, 149, 42, 0.25);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            margin: 0 auto 16px;
+            transition: all 0.3s;
+        }
+
+        .feature-card:hover .feature-icon {
+            background: var(--gold);
+            transform: scale(1.1) rotate(-5deg);
+        }
+
+        .feature-title {
+            font-weight: 700;
+            font-size: 1rem;
+            margin-bottom: 8px;
+            color: var(--gold-light);
+        }
+
+        .feature-desc {
+            color: var(--text-muted);
+            font-size: 0.82rem;
+            line-height: 1.7;
+        }
+
         /* ===== PRODUCTS ===== */
         #products {
             background: var(--dark-2);
@@ -411,11 +897,30 @@
             font-size: 0.85rem;
             cursor: pointer;
             transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tab-btn::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: var(--gold);
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.3s ease;
+            z-index: -1;
+            border-radius: 50px;
+        }
+
+        .tab-btn.active::before,
+        .tab-btn:hover::before {
+            transform: scaleX(1);
+            transform-origin: left;
         }
 
         .tab-btn.active,
         .tab-btn:hover {
-            background: var(--gold);
             color: var(--dark);
             border-color: var(--gold);
             font-weight: 700;
@@ -423,32 +928,65 @@
 
         .products-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
             gap: 24px;
         }
 
         .product-card {
             background: var(--dark);
-            border: 1px solid rgba(200, 149, 42, 0.15);
+            border: 1px solid rgba(200, 149, 42, 0.12);
             border-radius: 18px;
             overflow: hidden;
-            transition: all 0.35s;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+        }
+
+        .product-card::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 18px;
+            border: 2px solid transparent;
+            transition: border-color 0.3s;
+            pointer-events: none;
         }
 
         .product-card:hover {
-            transform: translateY(-6px);
-            border-color: rgba(200, 149, 42, 0.5);
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+            transform: translateY(-8px) scale(1.01);
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.4);
+        }
+
+        .product-card:hover::after {
+            border-color: rgba(200, 149, 42, 0.4);
         }
 
         .product-img {
-            height: 160px;
+            height: 170px;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 4rem;
-            background: linear-gradient(135deg, rgba(200, 149, 42, 0.08), rgba(17, 34, 64, 0.8));
+            background: linear-gradient(135deg, rgba(200, 149, 42, 0.06), rgba(17, 34, 64, 0.9));
             position: relative;
+            overflow: hidden;
+        }
+
+        .product-img::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(200, 149, 42, 0.08) 0%, transparent 50%);
+        }
+
+        .product-img span {
+            transition: transform 0.3s;
+        }
+
+        .product-card:hover .product-img span {
+            transform: scale(1.2);
         }
 
         .product-badge {
@@ -464,7 +1002,7 @@
         }
 
         .product-body {
-            padding: 18px;
+            padding: 20px;
         }
 
         .product-name {
@@ -495,34 +1033,36 @@
         }
 
         .product-whatsapp {
-            width: 36px;
-            height: 36px;
+            width: 38px;
+            height: 38px;
             background: #25D366;
-            border-radius: 8px;
+            border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
             text-decoration: none;
             font-size: 1.1rem;
             transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
         }
 
         .product-whatsapp:hover {
-            transform: scale(1.1);
+            transform: scale(1.15) rotate(-5deg);
+            box-shadow: 0 6px 20px rgba(37, 211, 102, 0.5);
         }
 
         /* ===== FREEZING SECTION ===== */
         .freezing-section {
             background: linear-gradient(135deg, var(--dark-3) 0%, var(--dark-2) 100%);
-            border: 1px solid rgba(30, 136, 229, 0.25);
+            border: 1px solid rgba(30, 136, 229, 0.2);
             border-radius: 24px;
             padding: 50px;
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 50px;
             align-items: center;
-            margin: 0 auto;
             max-width: 1200px;
+            margin: 0 auto;
             position: relative;
             overflow: hidden;
         }
@@ -536,11 +1076,26 @@
             height: 400px;
             background: radial-gradient(circle, rgba(30, 136, 229, 0.1), transparent 70%);
             border-radius: 50%;
+            animation: orbFloat 10s ease-in-out infinite;
         }
 
         .freezing-icon {
             font-size: 4rem;
             margin-bottom: 16px;
+            display: inline-block;
+            animation: freezeFloat 3s ease-in-out infinite;
+        }
+
+        @keyframes freezeFloat {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
         }
 
         .freezing-title {
@@ -564,13 +1119,20 @@
             gap: 12px;
             font-size: 0.9rem;
             color: var(--text-muted);
+            transition: all 0.3s;
+            padding: 6px 0;
+        }
+
+        .freezing-features li:hover {
+            color: var(--white);
+            padding-right: 8px;
         }
 
         .freezing-features li .check {
-            width: 22px;
-            height: 22px;
+            width: 24px;
+            height: 24px;
             background: rgba(30, 136, 229, 0.2);
-            border: 1px solid rgba(30, 136, 229, 0.5);
+            border: 1px solid rgba(30, 136, 229, 0.4);
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -578,6 +1140,13 @@
             font-size: 0.65rem;
             flex-shrink: 0;
             color: var(--accent);
+            transition: all 0.3s;
+        }
+
+        .freezing-features li:hover .check {
+            background: var(--accent);
+            color: white;
+            transform: scale(1.1);
         }
 
         .freezing-specs {
@@ -588,10 +1157,35 @@
 
         .spec-card {
             background: rgba(10, 22, 40, 0.7);
-            border: 1px solid rgba(30, 136, 229, 0.2);
-            border-radius: 14px;
-            padding: 20px;
+            border: 1px solid rgba(30, 136, 229, 0.15);
+            border-radius: 16px;
+            padding: 24px 20px;
             text-align: center;
+            transition: all 0.4s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .spec-card::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--accent), transparent);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .spec-card:hover {
+            transform: translateY(-6px);
+            border-color: rgba(30, 136, 229, 0.4);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .spec-card:hover::before {
+            opacity: 1;
         }
 
         .spec-icon {
@@ -601,7 +1195,7 @@
 
         .spec-val {
             font-weight: 800;
-            font-size: 1.1rem;
+            font-size: 1.15rem;
             color: var(--accent);
         }
 
@@ -611,16 +1205,94 @@
             margin-top: 4px;
         }
 
+        /* ===== TESTIMONIALS ===== */
+        #testimonials {
+            background: var(--dark);
+        }
+
+        .testimonials-slider {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .testimonial-card {
+            background: var(--dark-2);
+            border: 1px solid rgba(200, 149, 42, 0.1);
+            border-radius: 20px;
+            padding: 28px;
+            position: relative;
+            transition: all 0.3s;
+        }
+
+        .testimonial-card:hover {
+            transform: translateY(-6px);
+            border-color: rgba(200, 149, 42, 0.3);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .testimonial-card::before {
+            content: '"';
+            position: absolute;
+            top: 12px;
+            right: 20px;
+            font-size: 4rem;
+            color: rgba(200, 149, 42, 0.12);
+            font-family: Georgia, serif;
+            line-height: 1;
+        }
+
+        .testimonial-stars {
+            color: var(--gold-light);
+            font-size: 0.85rem;
+            margin-bottom: 14px;
+            letter-spacing: 2px;
+        }
+
+        .testimonial-text {
+            color: var(--text-muted);
+            font-size: 0.88rem;
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .testimonial-avatar {
+            width: 44px;
+            height: 44px;
+            background: linear-gradient(135deg, var(--gold), var(--gold-light));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+
+        .testimonial-name {
+            font-weight: 700;
+            font-size: 0.88rem;
+        }
+
+        .testimonial-role {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
         /* ===== WHATSAPP FORM ===== */
         #contact {
             background: var(--dark);
         }
 
         .contact-wrapper {
-            max-width: 700px;
+            max-width: 720px;
             margin: 0 auto;
             background: var(--dark-2);
-            border: 1px solid rgba(200, 149, 42, 0.2);
+            border: 1px solid rgba(200, 149, 42, 0.15);
             border-radius: 24px;
             padding: 48px;
             position: relative;
@@ -670,19 +1342,27 @@
             font-size: 0.83rem;
             font-weight: 600;
             color: var(--gold-light);
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        label .required {
+            color: var(--red);
+            font-size: 0.75rem;
         }
 
         input,
         select,
         textarea {
             background: rgba(10, 22, 40, 0.8);
-            border: 1px solid rgba(200, 149, 42, 0.25);
+            border: 1px solid rgba(200, 149, 42, 0.2);
             border-radius: 10px;
             padding: 12px 16px;
             color: var(--white);
             font-family: 'Cairo', sans-serif;
             font-size: 0.9rem;
-            transition: border-color 0.3s;
+            transition: all 0.3s;
             outline: none;
         }
 
@@ -691,11 +1371,55 @@
         textarea:focus {
             border-color: var(--gold);
             box-shadow: 0 0 0 3px rgba(200, 149, 42, 0.1);
+            background: rgba(10, 22, 40, 0.95);
         }
 
         input::placeholder,
         textarea::placeholder {
             color: var(--text-muted);
+        }
+
+        input.error,
+        select.error {
+            border-color: var(--red);
+            box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.1);
+            animation: shake 0.4s ease;
+        }
+
+        @keyframes shake {
+
+            0%,
+            100% {
+                transform: translateX(0);
+            }
+
+            20% {
+                transform: translateX(-6px);
+            }
+
+            40% {
+                transform: translateX(6px);
+            }
+
+            60% {
+                transform: translateX(-4px);
+            }
+
+            80% {
+                transform: translateX(4px);
+            }
+        }
+
+        .error-msg {
+            color: var(--red);
+            font-size: 0.72rem;
+            margin-top: 2px;
+            display: none;
+        }
+
+        .error-msg.show {
+            display: block;
+            animation: fadeInDown 0.3s ease;
         }
 
         select option {
@@ -719,12 +1443,18 @@
             align-items: center;
             gap: 8px;
             background: rgba(10, 22, 40, 0.6);
-            border: 1px solid rgba(200, 149, 42, 0.2);
-            border-radius: 8px;
-            padding: 9px 12px;
+            border: 1px solid rgba(200, 149, 42, 0.15);
+            border-radius: 10px;
+            padding: 10px 12px;
             cursor: pointer;
             transition: all 0.3s;
             font-size: 0.82rem;
+            user-select: none;
+        }
+
+        .interest-item:hover {
+            background: rgba(200, 149, 42, 0.08);
+            border-color: rgba(200, 149, 42, 0.3);
         }
 
         .interest-item input[type="checkbox"] {
@@ -738,21 +1468,23 @@
         }
 
         .interest-check {
-            width: 18px;
-            height: 18px;
-            border: 1.5px solid rgba(200, 149, 42, 0.4);
-            border-radius: 4px;
+            width: 20px;
+            height: 20px;
+            border: 1.5px solid rgba(200, 149, 42, 0.35);
+            border-radius: 5px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 0.7rem;
+            font-size: 0;
             flex-shrink: 0;
+            transition: all 0.3s;
         }
 
         .interest-item.checked .interest-check {
             background: var(--gold);
             border-color: var(--gold);
             color: var(--dark);
+            font-size: 0.7rem;
         }
 
         .wa-submit-btn {
@@ -760,7 +1492,7 @@
             padding: 16px;
             background: linear-gradient(135deg, #25D366, #128C7E);
             border: none;
-            border-radius: 12px;
+            border-radius: 14px;
             color: white;
             font-family: 'Cairo', sans-serif;
             font-weight: 800;
@@ -773,6 +1505,23 @@
             gap: 12px;
             transition: all 0.3s;
             box-shadow: 0 6px 25px rgba(37, 211, 102, 0.35);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .wa-submit-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
+            transition: left 0.6s;
+        }
+
+        .wa-submit-btn:hover::before {
+            left: 100%;
         }
 
         .wa-submit-btn:hover {
@@ -780,11 +1529,84 @@
             box-shadow: 0 14px 40px rgba(37, 211, 102, 0.5);
         }
 
+        .wa-submit-btn:active {
+            transform: translateY(-1px);
+        }
+
+        /* Toast notification */
+        .toast {
+            position: fixed;
+            top: 90px;
+            left: 50%;
+            transform: translateX(-50%) translateY(-20px);
+            background: var(--dark-3);
+            border: 1px solid rgba(200, 149, 42, 0.3);
+            border-radius: 12px;
+            padding: 14px 28px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            z-index: 9999;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+        }
+
+        .toast.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        .toast.success {
+            border-color: rgba(37, 211, 102, 0.4);
+        }
+
+        .toast.error {
+            border-color: rgba(231, 76, 60, 0.4);
+        }
+
+        /* ===== SCROLL TO TOP ===== */
+        .scroll-top {
+            position: fixed;
+            bottom: 100px;
+            left: 28px;
+            z-index: 998;
+            width: 44px;
+            height: 44px;
+            background: var(--dark-2);
+            border: 1px solid rgba(200, 149, 42, 0.3);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 1.1rem;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s;
+            color: var(--gold-light);
+        }
+
+        .scroll-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .scroll-top:hover {
+            background: var(--gold);
+            color: var(--dark);
+            transform: translateY(-3px);
+        }
+
         /* ===== FOOTER ===== */
         footer {
             background: var(--dark-2);
-            border-top: 1px solid rgba(200, 149, 42, 0.2);
-            padding: 50px 2rem 24px;
+            border-top: 1px solid rgba(200, 149, 42, 0.15);
+            padding: 60px 2rem 24px;
         }
 
         .footer-inner {
@@ -810,6 +1632,31 @@
             margin-top: 14px;
         }
 
+        .footer-social {
+            display: flex;
+            gap: 10px;
+            margin-top: 16px;
+        }
+
+        .social-icon {
+            width: 38px;
+            height: 38px;
+            background: rgba(200, 149, 42, 0.1);
+            border: 1px solid rgba(200, 149, 42, 0.2);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .social-icon:hover {
+            background: var(--gold);
+            transform: translateY(-3px);
+        }
+
         .footer-col h4 {
             color: var(--gold-light);
             font-weight: 700;
@@ -821,22 +1668,39 @@
             list-style: none;
             display: flex;
             flex-direction: column;
-            gap: 8px;
+            gap: 10px;
         }
 
         .footer-col ul li a {
             color: var(--text-muted);
             text-decoration: none;
             font-size: 0.83rem;
-            transition: color 0.3s;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .footer-col ul li a::before {
+            content: '←';
+            font-size: 0.7rem;
+            opacity: 0;
+            transition: all 0.3s;
+            transform: translateX(5px);
         }
 
         .footer-col ul li a:hover {
             color: var(--gold-light);
+            padding-right: 4px;
+        }
+
+        .footer-col ul li a:hover::before {
+            opacity: 1;
+            transform: translateX(0);
         }
 
         .footer-bottom {
-            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
             padding-top: 20px;
             display: flex;
             align-items: center;
@@ -845,19 +1709,20 @@
             color: var(--text-muted);
         }
 
+        /* ===== WHATSAPP FLOAT ===== */
         .wa-float {
             position: fixed;
             bottom: 28px;
             left: 28px;
             z-index: 999;
-            width: 58px;
-            height: 58px;
+            width: 60px;
+            height: 60px;
             background: #25D366;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.7rem;
+            font-size: 1.8rem;
             text-decoration: none;
             box-shadow: 0 6px 30px rgba(37, 211, 102, 0.5);
             transition: all 0.3s;
@@ -865,7 +1730,42 @@
         }
 
         .wa-float:hover {
-            transform: scale(1.1);
+            transform: scale(1.12);
+        }
+
+        .wa-float .tooltip {
+            position: absolute;
+            right: 70px;
+            background: var(--dark-2);
+            color: var(--white);
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            font-family: 'Cairo', sans-serif;
+            white-space: nowrap;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s;
+            border: 1px solid rgba(200, 149, 42, 0.2);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .wa-float .tooltip::after {
+            content: '';
+            position: absolute;
+            left: -6px;
+            top: 50%;
+            transform: translateY(-50%) rotate(45deg);
+            width: 12px;
+            height: 12px;
+            background: var(--dark-2);
+            border-right: 1px solid rgba(200, 149, 42, 0.2);
+            border-bottom: 1px solid rgba(200, 149, 42, 0.2);
+        }
+
+        .wa-float:hover .tooltip {
+            opacity: 1;
+            visibility: visible;
         }
 
         @keyframes pulse-wa {
@@ -876,45 +1776,87 @@
             }
 
             50% {
-                box-shadow: 0 6px 50px rgba(37, 211, 102, 0.8);
+                box-shadow: 0 6px 50px rgba(37, 211, 102, 0.8), 0 0 0 12px rgba(37, 211, 102, 0.15);
             }
         }
 
-        @keyframes fadeInDown {
-            from {
-                opacity: 0;
-                transform: translateY(-20px);
+        /* ===== ANIMATIONS ===== */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .reveal-left {
+            opacity: 0;
+            transform: translateX(40px);
+            transition: all 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .reveal-left.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .reveal-right {
+            opacity: 0;
+            transform: translateX(-40px);
+            transition: all 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .reveal-right.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .stagger-1 {
+            transition-delay: 0.1s !important;
+        }
+
+        .stagger-2 {
+            transition-delay: 0.2s !important;
+        }
+
+        .stagger-3 {
+            transition-delay: 0.3s !important;
+        }
+
+        .stagger-4 {
+            transition-delay: 0.4s !important;
+        }
+
+        .stagger-5 {
+            transition-delay: 0.5s !important;
+        }
+
+        .stagger-6 {
+            transition-delay: 0.6s !important;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 1024px) {
+            .features-grid {
+                grid-template-columns: repeat(2, 1fr);
             }
 
-            to {
-                opacity: 1;
-                transform: translateY(0);
+            .testimonials-slider {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .testimonials-slider .testimonial-card:last-child {
+                display: none;
             }
         }
 
-        @keyframes fadeInRight {
-            from {
-                opacity: 0;
-                transform: translateX(30px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-
-        /* Divider */
-        .divider {
-            border: none;
-            border-top: 1px solid rgba(200, 149, 42, 0.15);
-            margin: 0;
-        }
-
-        /* Mobile */
         @media (max-width: 900px) {
             .hero-content {
                 grid-template-columns: 1fr;
+                text-align: center;
             }
 
             .hero-visual {
@@ -922,11 +1864,23 @@
             }
 
             .hero-title {
-                font-size: 2.2rem;
+                font-size: 2.4rem;
+            }
+
+            .hero-btns {
+                justify-content: center;
+            }
+
+            .hero-badge {
+                justify-content: center;
             }
 
             .stats-inner {
                 grid-template-columns: repeat(2, 1fr);
+            }
+
+            .stat-item::after {
+                display: none;
             }
 
             .freezing-section {
@@ -950,20 +1904,135 @@
                 display: none;
             }
 
+            .hamburger {
+                display: flex;
+            }
+
+            .header-cta {
+                display: none;
+            }
+
             .interests-grid {
                 grid-template-columns: repeat(2, 1fr);
             }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .hero-title {
+                font-size: 1.9rem;
+            }
+
+            .stats-inner {
+                grid-template-columns: 1fr 1fr;
+                gap: 10px;
+            }
+
+            .stat-number {
+                font-size: 2rem;
+            }
+
+            .footer-top {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+                gap: 8px;
+                text-align: center;
+            }
+
+            .contact-wrapper {
+                padding: 28px 20px;
+            }
+
+            .testimonials-slider {
+                grid-template-columns: 1fr;
+            }
+
+            .testimonials-slider .testimonial-card:last-child {
+                display: block;
+            }
+
+            .interests-grid {
+                grid-template-columns: 1fr;
+            }
+
+            section {
+                padding: 50px 1rem;
+            }
+        }
+
+        /* Smooth selection color */
+        ::selection {
+            background: rgba(200, 149, 42, 0.3);
+            color: var(--white);
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--dark);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--gold);
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--gold-light);
         }
     </style>
 </head>
 
 <body>
 
+    <!-- PRELOADER -->
+    <div class="preloader" id="preloader">
+        <div class="preloader-icon">🐓</div>
+        <div class="preloader-bar"></div>
+        <div class="preloader-text">جاري تحميل الموقع...</div>
+    </div>
+
+    <!-- PARTICLES -->
+    <canvas class="particles-canvas" id="particlesCanvas"></canvas>
+
+    <!-- TOAST -->
+    <div class="toast" id="toast"></div>
+
+    <!-- SCROLL TO TOP -->
+    <div class="scroll-top" id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">⬆</div>
+
     <!-- WhatsApp Float -->
-    <a href="#" class="wa-float" onclick="openWhatsApp(); return false;" title="تواصل معنا عبر واتساب">💬</a>
+    <a href="#" class="wa-float" onclick="openWhatsApp(); return false;" title="تواصل معنا عبر واتساب">
+        💬
+        <span class="tooltip">تواصل معنا الآن!</span>
+    </a>
+
+    <!-- MOBILE OVERLAY -->
+    <div class="mobile-overlay" id="mobileOverlay" onclick="toggleMobileMenu()"></div>
+
+    <!-- MOBILE MENU -->
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="#home" onclick="toggleMobileMenu()">🏠 الرئيسية</a>
+        <a href="#why-us" onclick="toggleMobileMenu()">⭐ لماذا نحن</a>
+        <a href="#products" onclick="toggleMobileMenu()">📦 المنتجات</a>
+        <a href="#freezing" onclick="toggleMobileMenu()">❄️ التجميد</a>
+        <a href="#testimonials" onclick="toggleMobileMenu()">💬 آراء العملاء</a>
+        <a href="#contact" onclick="toggleMobileMenu()">📞 تواصل معنا</a>
+        <a href="#" onclick="openWhatsApp(); toggleMobileMenu(); return false;"
+            style="color: #25D366; border-bottom: none; margin-top: 12px;">💬 واتساب مباشر</a>
+    </div>
 
     <!-- HEADER -->
-    <header>
+    <header id="mainHeader">
         <div class="logo-area">
             <div class="logo-icon">🐓</div>
             <div class="logo-text">
@@ -971,32 +2040,46 @@
                 <span>لمعدات الدواجن ومستلزمات التفريخ</span>
             </div>
         </div>
-        <nav>
+        <nav id="mainNav">
             <a href="#home">الرئيسية</a>
+            <a href="#why-us">لماذا نحن</a>
             <a href="#products">المنتجات</a>
             <a href="#freezing">التجميد</a>
+            <a href="#testimonials">آراء العملاء</a>
             <a href="#contact">تواصل معنا</a>
         </nav>
         <a href="#contact" class="header-cta">احصل على عرض سعر</a>
+        <button class="hamburger" id="hamburger" onclick="toggleMobileMenu()" aria-label="القائمة">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
     </header>
 
     <!-- HERO -->
     <section class="hero" id="home">
         <div class="hero-bg"></div>
         <div class="hero-grid"></div>
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+
         <div class="hero-content">
             <div>
-                <div class="hero-badge">🏆 الشريك المثالي لمزارع الدواجن</div>
-                <h1 class="hero-title">
+                <div class="hero-badge reveal">
+                    <span class="badge-dot"></span>
+                    🏆 الشريك المثالي لمزارع الدواجن
+                </div>
+                <h1 class="hero-title reveal stagger-1">
                     كل ما تحتاجه<br>
-                    <span class="gold">لمزرعتك</span><br>
+                    <span class="gold">لمزر��تك</span><br>
                     في مكان واحد
                 </h1>
-                <p class="hero-desc">
+                <p class="hero-desc reveal stagger-2">
                     نوفر جميع معدات ومستلزمات تربية الدواجن، التفريخ، والذبح والتجميد للدجاج، السكان، البط، الرومان،
                     والأرانب — بجودة عالية وأسعار تنافسية.
                 </p>
-                <div class="hero-btns">
+                <div class="hero-btns reveal stagger-3">
                     <a href="#contact" class="btn-primary">
                         <span>💬</span> تواصل عبر واتساب
                     </a>
@@ -1007,27 +2090,27 @@
             </div>
 
             <div class="hero-visual">
-                <div class="animal-card">
+                <div class="animal-card reveal stagger-1">
                     <div class="animal-emoji">🐔</div>
                     <div class="animal-name">الدجاج</div>
                     <div class="animal-desc">تربية وتفريخ</div>
                 </div>
-                <div class="animal-card">
+                <div class="animal-card reveal stagger-2">
                     <div class="animal-emoji">🦢</div>
                     <div class="animal-name">السكان</div>
                     <div class="animal-desc">إوز وبجع</div>
                 </div>
-                <div class="animal-card">
+                <div class="animal-card reveal stagger-3">
                     <div class="animal-emoji">🦆</div>
                     <div class="animal-name">البط</div>
                     <div class="animal-desc">تربية ومعدات</div>
                 </div>
-                <div class="animal-card">
+                <div class="animal-card reveal stagger-4">
                     <div class="animal-emoji">🦃</div>
                     <div class="animal-name">الرومان</div>
                     <div class="animal-desc">ديك رومي</div>
                 </div>
-                <div class="animal-card wide">
+                <div class="animal-card wide reveal stagger-5">
                     <div class="animal-emoji">🐰</div>
                     <div class="animal-name">الأرانب</div>
                     <div class="animal-desc">جميع مستلزمات التربية</div>
@@ -1036,38 +2119,135 @@
         </div>
     </section>
 
+    <!-- MARQUEE -->
+    <div class="marquee-bar">
+        <div class="marquee-track">
+            <div class="marquee-item">🐔 معدات دواجن</div>
+            <div class="marquee-item">•</div>
+            <div class="marquee-item">🥚 أجهزة تفريخ</div>
+            <div class="marquee-item">•</div>
+            <div class="marquee-item">🦆 مستلزمات بط</div>
+            <div class="marquee-item">•</div>
+            <div class="marquee-item">🦃 تربية رومان</div>
+            <div class="marquee-item">•</div>
+            <div class="marquee-item">🐰 تربية أرانب</div>
+            <div class="marquee-item">•</div>
+            <div class="marquee-item">🔪 خطوط ذبح</div>
+            <div class="marquee-item">•</div>
+            <div class="marquee-item">❄️ خطوط تجميد</div>
+            <div class="marquee-item">•</div>
+            <div class="marquee-item">💊 صحة وتطعيمات</div>
+            <div class="marquee-item">•</div>
+            <div class="marquee-item">🌾 أعلاف ومغذيات</div>
+            <div class="marquee-item">•</div>
+            <!-- Duplicate for seamless loop -->
+            <div class="marquee-item">🐔 معدات دواجن</div>
+            <div class="marquee-item">•</div>
+            <div class="marquee-item">🥚 أجهزة تفريخ</div>
+            <div class="marquee-item">•</div>
+            <div class="marquee-item">🦆 مستلزمات بط</div>
+            <div class="marquee-item">•</div>
+            <div class="marquee-item">🦃 تربية رومان</div>
+            <div class="marquee-item">•</div>
+            <div class="marquee-item">🐰 تربية أرانب</div>
+            <div class="marquee-item">•</div>
+            <div class="marquee-item">🔪 خطوط ذبح</div>
+            <div class="marquee-item">•</div>
+            <div class="marquee-item">❄️ خطوط تجميد</div>
+            <div class="marquee-item">•</div>
+            <div class="marquee-item">💊 صحة وتطعيمات</div>
+            <div class="marquee-item">•</div>
+            <div class="marquee-item">🌾 أعلاف ومغذيات</div>
+            <div class="marquee-item">•</div>
+        </div>
+    </div>
+
     <!-- STATS -->
     <div class="stats-bar">
         <div class="stats-inner">
-            <div class="stat-item">
-                <div class="stat-number">500+</div>
+            <div class="stat-item reveal stagger-1">
+                <div class="stat-icon">📦</div>
+                <div class="stat-number"><span class="counter" data-target="500">0</span><span class="plus">+</span>
+                </div>
                 <div class="stat-label">منتج متاح</div>
             </div>
-            <div class="stat-item">
-                <div class="stat-number">20+</div>
+            <div class="stat-item reveal stagger-2">
+                <div class="stat-icon">⏳</div>
+                <div class="stat-number"><span class="counter" data-target="20">0</span><span class="plus">+</span>
+                </div>
                 <div class="stat-label">سنة خبرة</div>
             </div>
-            <div class="stat-item">
-                <div class="stat-number">1000+</div>
+            <div class="stat-item reveal stagger-3">
+                <div class="stat-icon">👥</div>
+                <div class="stat-number"><span class="counter" data-target="1000">0</span><span class="plus">+</span>
+                </div>
                 <div class="stat-label">عميل موثوق</div>
             </div>
-            <div class="stat-item">
-                <div class="stat-number">15+</div>
+            <div class="stat-item reveal stagger-4">
+                <div class="stat-icon">🌍</div>
+                <div class="stat-number"><span class="counter" data-target="15">0</span><span class="plus">+</span>
+                </div>
                 <div class="stat-label">دولة نخدمها</div>
             </div>
         </div>
     </div>
 
+    <!-- WHY US -->
+    <section id="why-us">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-tag reveal">⭐ لماذا تختارنا</div>
+                <h2 class="section-title reveal stagger-1">خبرة <span class="gold">+20 سنة</span> في خدمة المزارع</h2>
+                <p class="section-desc reveal stagger-2">نلتزم بتقديم أفضل المنتجات والخدمات لضمان نجاح مزرعتك</p>
+            </div>
+
+            <div class="features-grid">
+                <div class="feature-card reveal stagger-1">
+                    <div class="feature-icon">🏗️</div>
+                    <div class="feature-title">جودة عالية</div>
+                    <div class="feature-desc">جميع منتجاتنا مصنوعة من أفضل المواد وتخضع لاختبارات جودة صارمة قبل الشحن
+                    </div>
+                </div>
+                <div class="feature-card reveal stagger-2">
+                    <div class="feature-icon">💰</div>
+                    <div class="feature-title">أسعار تنافسية</div>
+                    <div class="feature-desc">نقدم أفضل أسعار في السوق مع خيارات دفع مرنة تناسب جميع العملاء</div>
+                </div>
+                <div class="feature-card reveal stagger-3">
+                    <div class="feature-icon">🚚</div>
+                    <div class="feature-title">شحن سريع</div>
+                    <div class="feature-desc">شحن دولي موثوق لجميع الدول العربية مع تتبع الشحنات في الوقت الحقيقي</div>
+                </div>
+                <div class="feature-card reveal stagger-4">
+                    <div class="feature-icon">🔧</div>
+                    <div class="feature-title">دعم فني</div>
+                    <div class="feature-desc">فريق دعم فني متخصص متاح على مدار الساعة لمساعدتك في التركيب والصيانة</div>
+                </div>
+                <div class="feature-card reveal stagger-5">
+                    <div class="feature-icon">📋</div>
+                    <div class="feature-title">استشارات مجانية</div>
+                    <div class="feature-desc">نقدم استشارات فنية مجانية لمساعدتك في اختيار المعدات المناسبة لمشروعك
+                    </div>
+                </div>
+                <div class="feature-card reveal stagger-6">
+                    <div class="feature-icon">🛡️</div>
+                    <div class="feature-title">ضمان شامل</div>
+                    <div class="feature-desc">ضمان شامل على جميع المنتجات مع خدمة ما بعد البيع وتوفير قطع الغيار</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- PRODUCTS -->
     <section id="products">
         <div class="container">
             <div class="section-header">
-                <div class="section-tag">📦 منتجاتنا</div>
-                <h2 class="section-title">مستلزمات <span class="gold">شاملة</span> لكل نوع</h2>
-                <p class="section-desc">من بيض التفريخ إلى خطوط الذبح، نوفر كل ما تحتاجه مزرعتك</p>
+                <div class="section-tag reveal">📦 منتجاتنا</div>
+                <h2 class="section-title reveal stagger-1">مستلزمات <span class="gold">شاملة</span> لكل نوع</h2>
+                <p class="section-desc reveal stagger-2">من بيض التفريخ إلى خطوط الذبح، نوفر كل ما تحتاجه مزرعتك</p>
             </div>
 
-            <div class="categories-tabs">
+            <div class="categories-tabs reveal stagger-3">
                 <button class="tab-btn active" onclick="filterProducts('all', this)">الكل</button>
                 <button class="tab-btn" onclick="filterProducts('incubation', this)">🥚 التفريخ</button>
                 <button class="tab-btn" onclick="filterProducts('feeding', this)">🌾 التغذية</button>
@@ -1077,16 +2257,14 @@
                 <button class="tab-btn" onclick="filterProducts('health', this)">💊 الصحة</button>
             </div>
 
-            <div class="products-grid" id="productsGrid">
-                <!-- Products inserted by JS -->
-            </div>
+            <div class="products-grid" id="productsGrid"></div>
         </div>
     </section>
 
     <!-- FREEZING -->
     <section id="freezing" style="background: var(--dark-2);">
         <div class="freezing-section">
-            <div>
+            <div class="reveal-left">
                 <div class="freezing-icon">❄️</div>
                 <div class="freezing-title">خط التجميد المتكامل</div>
                 <p style="color: var(--text-muted); font-size: 0.9rem; line-height: 1.8; margin-bottom: 24px;">
@@ -1102,7 +2280,7 @@
                     <li><span class="check">✓</span> صيانة وخدمة ما بعد البيع</li>
                 </ul>
             </div>
-            <div class="freezing-specs">
+            <div class="freezing-specs reveal-right">
                 <div class="spec-card">
                     <div class="spec-icon">🌡️</div>
                     <div class="spec-val">-40°C</div>
@@ -1127,27 +2305,79 @@
         </div>
     </section>
 
+    <!-- TESTIMONIALS -->
+    <section id="testimonials">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-tag reveal">💬 آراء العملاء</div>
+                <h2 class="section-title reveal stagger-1">ماذا يقول <span class="gold">عملاؤنا</span></h2>
+                <p class="section-desc reveal stagger-2">ثقة أكثر من 1000 عميل في مختلف الدول العربية</p>
+            </div>
+
+            <div class="testimonials-slider">
+                <div class="testimonial-card reveal stagger-1">
+                    <div class="testimonial-stars">⭐⭐⭐⭐⭐</div>
+                    <div class="testimonial-text">تعاملت معهم في شراء فقاسة 528 بيضة ومعلفات أوتوماتيك. الجودة ممتازة
+                        والدعم الفني رائع جداً. أنصح الجميع بالتعامل معهم.</div>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">👨‍🌾</div>
+                        <div>
+                            <div class="testimonial-name">أحمد محمد</div>
+                            <div class="testimonial-role">مزرعة إنتاج - مصر 🇪🇬</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card reveal stagger-2">
+                    <div class="testimonial-stars">⭐⭐⭐⭐⭐</div>
+                    <div class="testimonial-text">اشترينا خط ذبح متكامل وكان التركيب والتشغيل سهل جداً بفضل الدعم الفني.
+                        المنتجات عالية الجودة والأسعار تنافسية مقارنة بالسوق.</div>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">👨‍💼</div>
+                        <div>
+                            <div class="testimonial-name">عبدالله الحربي</div>
+                            <div class="testimonial-role">مجزرة تجارية - السعودية 🇸🇦</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card reveal stagger-3">
+                    <div class="testimonial-stars">⭐⭐⭐⭐⭐</div>
+                    <div class="testimonial-text">خط التجميد الذي اشتريناه منهم يعمل بكفاءة عالية منذ سنتين بدون أي
+                        مشاكل. خدمة ما بعد البيع ممتازة والتوصيل كان سريع.</div>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">👨‍🔧</div>
+                        <div>
+                            <div class="testimonial-name">خالد المنصوري</div>
+                            <div class="testimonial-role">مصنع تجميد - الإمارات 🇦🇪</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- CONTACT / WHATSAPP FORM -->
     <section id="contact">
         <div class="container">
             <div class="section-header">
-                <div class="section-tag">💬 تواصل معنا</div>
-                <h2 class="section-title">أرسل بياناتك <span class="gold">عبر واتساب</span></h2>
-                <p class="section-desc">سجّل بياناتك واهتماماتك وسيتواصل معك فريقنا فوراً</p>
+                <div class="section-tag reveal">💬 تواصل معنا</div>
+                <h2 class="section-title reveal stagger-1">أرسل بياناتك <span class="gold">عبر واتساب</span></h2>
+                <p class="section-desc reveal stagger-2">سجّل بياناتك واهتماماتك وسيتواصل معك فريقنا فوراً</p>
             </div>
 
-            <div class="contact-wrapper">
+            <div class="contact-wrapper reveal stagger-3">
                 <div class="form-grid">
                     <div class="form-group">
-                        <label>الاسم الكامل *</label>
+                        <label>الاسم الكامل <span class="required">*</span></label>
                         <input type="text" id="fullName" placeholder="أدخل اسمك الكامل">
+                        <div class="error-msg" id="nameError">يرجى إدخال الاسم الكامل</div>
                     </div>
                     <div class="form-group">
-                        <label>رقم الواتساب *</label>
-                        <input type="tel" id="phone" placeholder="+20 / +966 / +971 ...">
+                        <label>رقم الواتساب <span class="required">*</span></label>
+                        <input type="tel" id="phone" placeholder="+20 / +966 / +971 ..." dir="ltr">
+                        <div class="error-msg" id="phoneError">يرجى إدخال رقم واتساب صحيح</div>
                     </div>
                     <div class="form-group">
-                        <label>البلد *</label>
+                        <label>البلد <span class="required">*</span></label>
                         <select id="country">
                             <option value="">اختر بلدك</option>
                             <option>مصر</option>
@@ -1170,6 +2400,7 @@
                             <option>فلسطين</option>
                             <option>أخرى</option>
                         </select>
+                        <div class="error-msg" id="countryError">يرجى اختيار البلد</div>
                     </div>
                     <div class="form-group">
                         <label>نوع النشاط</label>
@@ -1185,7 +2416,7 @@
                         </select>
                     </div>
                     <div class="form-group full">
-                        <label>مجالات الاهتمام *</label>
+                        <label>مجالات الاهتمام <span class="required">*</span></label>
                         <div class="interests-grid" id="interestsGrid">
                             <div class="interest-item" onclick="toggleInterest(this, '🥚 أجهزة تفريخ')">
                                 <span class="interest-check">✓</span> 🥚 أجهزة تفريخ
@@ -1252,34 +2483,40 @@
                     </div>
                     <p>نحن شركة متخصصة في توفير جميع معدات ومستلزمات الدواجن والأرانب، من التفريخ حتى التجميد، بأعلى
                         معايير الجودة والخدمة.</p>
+                    <div class="footer-social">
+                        <a href="#" class="social-icon" title="فيسبوك">📘</a>
+                        <a href="#" class="social-icon" title="يوتيوب">📺</a>
+                        <a href="#" class="social-icon" title="انستقرام">📸</a>
+                        <a href="#" class="social-icon" title="تويتر">🐦</a>
+                    </div>
                 </div>
                 <div class="footer-col">
                     <h4>المنتجات</h4>
                     <ul>
-                        <li><a href="#">أجهزة تفريخ</a></li>
-                        <li><a href="#">معدات تغذية</a></li>
-                        <li><a href="#">أقفاص وعنابر</a></li>
-                        <li><a href="#">خطوط ذبح</a></li>
-                        <li><a href="#">خطوط تجميد</a></li>
+                        <li><a href="#products">أجهزة تفريخ</a></li>
+                        <li><a href="#products">معدات تغذية</a></li>
+                        <li><a href="#products">أقفاص وعنابر</a></li>
+                        <li><a href="#products">خطوط ذبح</a></li>
+                        <li><a href="#freezing">خطوط تجميد</a></li>
                     </ul>
                 </div>
                 <div class="footer-col">
                     <h4>الحيوانات</h4>
                     <ul>
-                        <li><a href="#">الدجاج 🐔</a></li>
-                        <li><a href="#">السكان 🦢</a></li>
-                        <li><a href="#">البط 🦆</a></li>
-                        <li><a href="#">الرومان 🦃</a></li>
-                        <li><a href="#">الأرانب 🐰</a></li>
+                        <li><a href="#products">الدجاج 🐔</a></li>
+                        <li><a href="#products">السكان 🦢</a></li>
+                        <li><a href="#products">البط 🦆</a></li>
+                        <li><a href="#products">الرومان 🦃</a></li>
+                        <li><a href="#products">الأرانب 🐰</a></li>
                     </ul>
                 </div>
                 <div class="footer-col">
                     <h4>تواصل معنا</h4>
                     <ul>
-                        <li><a href="#contact">واتساب</a></li>
-                        <li><a href="#">البريد الإلكتروني</a></li>
-                        <li><a href="#">طلب كتالوج</a></li>
-                        <li><a href="#">طلب عرض سعر</a></li>
+                        <li><a href="#contact">💬 واتساب</a></li>
+                        <li><a href="#">📧 البريد الإلكتروني</a></li>
+                        <li><a href="#contact">📋 طلب كتالوج</a></li>
+                        <li><a href="#contact">💰 طلب عرض سعر</a></li>
                     </ul>
                 </div>
             </div>
@@ -1291,6 +2528,136 @@
     </footer>
 
     <script>
+        // ===== PRELOADER =====
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.getElementById('preloader').classList.add('hidden');
+            }, 1200);
+        });
+
+        // ===== PARTICLES =====
+        const canvas = document.getElementById('particlesCanvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+
+        class Particle {
+            constructor() {
+                this.reset();
+            }
+            reset() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 2 + 0.5;
+                this.speedX = (Math.random() - 0.5) * 0.3;
+                this.speedY = (Math.random() - 0.5) * 0.3;
+                this.opacity = Math.random() * 0.4 + 0.1;
+                this.color = Math.random() > 0.5 ? '200, 149, 42' : '30, 136, 229';
+            }
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                if (this.x < 0 || this.x > canvas.width || this.y < 0 || this.y > canvas.height) {
+                    this.reset();
+                }
+            }
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(${this.color}, ${this.opacity})`;
+                ctx.fill();
+            }
+        }
+
+        for (let i = 0; i < 50; i++) {
+            particles.push(new Particle());
+        }
+
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+
+            // Draw connections
+            for (let i = 0; i < particles.length; i++) {
+                for (let j = i + 1; j < particles.length; j++) {
+                    const dx = particles[i].x - particles[j].x;
+                    const dy = particles[i].y - particles[j].y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+                    if (dist < 120) {
+                        ctx.beginPath();
+                        ctx.strokeStyle = `rgba(200, 149, 42, ${0.08 * (1 - dist / 120)})`;
+                        ctx.lineWidth = 0.5;
+                        ctx.moveTo(particles[i].x, particles[i].y);
+                        ctx.lineTo(particles[j].x, particles[j].y);
+                        ctx.stroke();
+                    }
+                }
+            }
+            requestAnimationFrame(animateParticles);
+        }
+        animateParticles();
+
+        // ===== HEADER SCROLL =====
+        const header = document.getElementById('mainHeader');
+        const scrollTop = document.getElementById('scrollTop');
+        const sections = document.querySelectorAll('section[id]');
+        const navLinks = document.querySelectorAll('#mainNav a');
+
+        window.addEventListener('scroll', () => {
+            const scrollY = window.scrollY;
+
+            // Header effect
+            if (scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+
+            // Scroll to top button
+            if (scrollY > 500) {
+                scrollTop.classList.add('visible');
+            } else {
+                scrollTop.classList.remove('visible');
+            }
+
+            // Active nav link
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - 100;
+                const sectionHeight = section.offsetHeight;
+                if (scrollY >= sectionTop && scrollY < sectionTop + sectionHeight) {
+                    current = section.getAttribute('id');
+                }
+            });
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === '#' + current) {
+                    link.classList.add('active');
+                }
+            });
+        });
+
+        // ===== MOBILE MENU =====
+        function toggleMobileMenu() {
+            const hamburger = document.getElementById('hamburger');
+            const menu = document.getElementById('mobileMenu');
+            const overlay = document.getElementById('mobileOverlay');
+
+            hamburger.classList.toggle('open');
+            menu.classList.toggle('open');
+            overlay.classList.toggle('show');
+            document.body.style.overflow = menu.classList.contains('open') ? 'hidden' : '';
+        }
+
         // ===== PRODUCTS DATA =====
         const products = [
             { id: 1, emoji: '🥚', name: 'فقاسة بيض دجاج تلقائية', desc: 'سعة 528 بيضة، تحكم رقمي كامل في الحرارة والرطوبة والتقليب', tag: 'تفريخ', cat: 'incubation', badge: 'الأكثر مبيعاً' },
@@ -1312,22 +2679,32 @@
         function renderProducts() {
             const grid = document.getElementById('productsGrid');
             const filtered = currentFilter === 'all' ? products : products.filter(p => p.cat === currentFilter);
-            grid.innerHTML = filtered.map(p => `
-    <div class="product-card">
-      <div class="product-img">
-        <span>${p.emoji}</span>
-        ${p.badge ? `<span class="product-badge">${p.badge}</span>` : ''}
-      </div>
-      <div class="product-body">
-        <div class="product-name">${p.name}</div>
-        <div class="product-desc">${p.desc}</div>
-        <div class="product-footer">
-          <span class="product-tag">${p.tag}</span>
-          <a href="#" class="product-whatsapp" onclick="askProduct('${p.name}'); return false;" title="استفسار عبر واتساب">💬</a>
-        </div>
-      </div>
-    </div>
-  `).join('');
+
+            grid.style.opacity = '0';
+            grid.style.transform = 'translateY(10px)';
+
+            setTimeout(() => {
+                grid.innerHTML = filtered.map((p, i) => `
+                    <div class="product-card" style="animation-delay: ${i * 0.08}s">
+                        <div class="product-img">
+                            <span>${p.emoji}</span>
+                            ${p.badge ? `<span class="product-badge">${p.badge}</span>` : ''}
+                        </div>
+                        <div class="product-body">
+                            <div class="product-name">${p.name}</div>
+                            <div class="product-desc">${p.desc}</div>
+                            <div class="product-footer">
+                                <span class="product-tag">${p.tag}</span>
+                                <a href="#" class="product-whatsapp" onclick="askProduct('${p.name}'); return false;" title="استفسار عبر واتساب">💬</a>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+
+                grid.style.opacity = '1';
+                grid.style.transform = 'translateY(0)';
+                grid.style.transition = 'all 0.4s ease';
+            }, 200);
         }
 
         function filterProducts(cat, btn) {
@@ -1348,22 +2725,64 @@
             else selectedInterests.delete(val);
         }
 
+        // ===== TOAST =====
+        function showToast(msg, type = 'success') {
+            const toast = document.getElementById('toast');
+            toast.textContent = msg;
+            toast.className = `toast ${type} show`;
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3500);
+        }
+
+        // ===== FORM VALIDATION =====
+        function clearErrors() {
+            document.querySelectorAll('.error').forEach(el => el.classList.remove('error'));
+            document.querySelectorAll('.error-msg').forEach(el => el.classList.remove('show'));
+        }
+
+        function showFieldError(inputId, errorId) {
+            document.getElementById(inputId).classList.add('error');
+            document.getElementById(errorId).classList.add('show');
+        }
+
         // ===== WHATSAPP =====
         const WA_NUMBER = '201000000000'; // ← ضع رقم واتساب الشركة هنا
 
         function sendToWhatsApp() {
+            clearErrors();
+            let hasError = false;
+
             const name = document.getElementById('fullName').value.trim();
             const phone = document.getElementById('phone').value.trim();
             const country = document.getElementById('country').value;
             const activity = document.getElementById('activity').value;
             const message = document.getElementById('message').value.trim();
 
-            if (!name || !phone || !country) {
-                alert('⚠️ يرجى تعبئة الاسم ورقم الواتساب والبلد على الأقل');
+            if (!name) {
+                showFieldError('fullName', 'nameError');
+                hasError = true;
+            }
+            if (!phone) {
+                showFieldError('phone', 'phoneError');
+                hasError = true;
+            }
+            if (!country) {
+                showFieldError('country', 'countryError');
+                hasError = true;
+            }
+
+            if (hasError) {
+                showToast('⚠️ يرجى تعبئة جميع الحقول المطلوبة', 'error');
                 return;
             }
 
-            const interests = [...selectedInterests].join('، ') || 'لم يتم التحديد';
+            if (selectedInterests.size === 0) {
+                showToast('⚠️ يرجى اختيار مجال اهتمام واحد على الأقل', 'error');
+                return;
+            }
+
+            const interests = [...selectedInterests].join('، ');
 
             const text = `🐓 *رسالة جديدة من موقع المتحدة*\n\n` +
                 `👤 *الاسم:* ${name}\n` +
@@ -1376,7 +2795,12 @@
                 `📌 أرسل عبر الموقع الرسمي`;
 
             const url = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(text)}`;
-            window.open(url, '_blank');
+
+            showToast('✅ جاري فتح واتساب...', 'success');
+
+            setTimeout(() => {
+                window.open(url, '_blank');
+            }, 500);
         }
 
         function openWhatsApp() {
@@ -1387,21 +2811,80 @@
             window.open(`https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(`السلام عليكم، أود الاستفسار عن: ${name}`)}`, '_blank');
         }
 
-        // Animate on scroll
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(e => {
-                if (e.isIntersecting) {
-                    e.target.style.opacity = '1';
-                    e.target.style.transform = 'translateY(0)';
+        // ===== COUNTER ANIMATION =====
+        let countersDone = false;
+
+        function animateCounters() {
+            if (countersDone) return;
+
+            const counters = document.querySelectorAll('.counter');
+            const statsBar = document.querySelector('.stats-bar');
+            const rect = statsBar.getBoundingClientRect();
+
+            if (rect.top < window.innerHeight * 0.85) {
+                countersDone = true;
+
+                counters.forEach(counter => {
+                    const target = parseInt(counter.dataset.target);
+                    const duration = 2000;
+                    const start = performance.now();
+
+                    function updateCounter(currentTime) {
+                        const elapsed = currentTime - start;
+                        const progress = Math.min(elapsed / duration, 1);
+
+                        // Easing function (ease-out)
+                        const eased = 1 - Math.pow(1 - progress, 3);
+                        const current = Math.round(eased * target);
+
+                        counter.textContent = current.toLocaleString('ar-EG');
+
+                        if (progress < 1) {
+                            requestAnimationFrame(updateCounter);
+                        }
+                    }
+
+                    requestAnimationFrame(updateCounter);
+                });
+            }
+        }
+
+        window.addEventListener('scroll', animateCounters);
+
+        // ===== SCROLL REVEAL =====
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
                 }
             });
-        }, { threshold: 0.1 });
+        }, {
+            threshold: 0.1,
+            rootMargin: '0px 0px -40px 0px'
+        });
 
-        document.querySelectorAll('.product-card, .animal-card, .spec-card').forEach(el => {
-            el.style.opacity = '0';
-            el.style.transform = 'translateY(20px)';
-            el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
-            observer.observe(el);
+        document.querySelectorAll('.reveal, .reveal-left, .reveal-right').forEach(el => {
+            revealObserver.observe(el);
+        });
+
+        // Clear input errors on focus
+        document.querySelectorAll('input, select, textarea').forEach(el => {
+            el.addEventListener('focus', () => {
+                el.classList.remove('error');
+                const errorMsg = el.parentElement.querySelector('.error-msg');
+                if (errorMsg) errorMsg.classList.remove('show');
+            });
+        });
+
+        // Keyboard accessibility for interests
+        document.querySelectorAll('.interest-item').forEach(item => {
+            item.setAttribute('tabindex', '0');
+            item.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    item.click();
+                }
+            });
         });
     </script>
 </body>
