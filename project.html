@@ -1,0 +1,1409 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>المتحدة لمعدات الدواجن ومستلزمات التفريخ</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;900&family=Cairo:wght@300;400;600;700;900&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --gold: #C8952A;
+            --gold-light: #E8B84B;
+            --gold-pale: #F5E6C8;
+            --dark: #0A1628;
+            --dark-2: #112240;
+            --dark-3: #1A3055;
+            --white: #FAFAF8;
+            --text-muted: #8899AA;
+            --green: #2ECC71;
+            --red: #E74C3C;
+            --accent: #1E88E5;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: var(--dark);
+            color: var(--white);
+            overflow-x: hidden;
+        }
+
+        /* ===== HEADER ===== */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(10, 22, 40, 0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(200, 149, 42, 0.3);
+            padding: 0 2rem;
+            height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .logo-icon {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, var(--gold), var(--gold-light));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            box-shadow: 0 4px 20px rgba(200, 149, 42, 0.4);
+        }
+
+        .logo-text {
+            font-family: 'Tajawal', sans-serif;
+            font-weight: 900;
+            font-size: 1.1rem;
+            line-height: 1.3;
+            color: var(--gold-light);
+        }
+
+        .logo-text span {
+            display: block;
+            font-size: 0.7rem;
+            font-weight: 400;
+            color: var(--text-muted);
+        }
+
+        nav {
+            display: flex;
+            gap: 24px;
+            }
+
+        nav a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.88rem;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: var(--gold-light);
+        }
+
+        .header-cta {
+            background: linear-gradient(135deg, var(--gold), var(--gold-light));
+            color: var(--dark);
+            border: none;
+            padding: 8px 20px;
+            border-radius: 8px;
+            font-family: 'Cairo', sans-serif;
+            font-weight: 700;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+        }
+
+        .header-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(200, 149, 42, 0.5);
+        }
+
+        /* ===== HERO ===== */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            padding-top: 70px;
+        }
+
+        .hero-bg {
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(ellipse 80% 60% at 70% 50%, rgba(200, 149, 42, 0.12) 0%, transparent 60%),
+                radial-gradient(ellipse 60% 80% at 20% 80%, rgba(30, 136, 229, 0.08) 0%, transparent 50%),
+                linear-gradient(180deg, var(--dark) 0%, var(--dark-2) 100%);
+        }
+
+        .hero-grid {
+            position: absolute;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(200, 149, 42, 0.06) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(200, 149, 42, 0.06) 1px, transparent 1px);
+            background-size: 60px 60px;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(200, 149, 42, 0.15);
+            border: 1px solid rgba(200, 149, 42, 0.4);
+            padding: 6px 16px;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            color: var(--gold-light);
+            margin-bottom: 20px;
+            animation: fadeInDown 0.8s ease;
+        }
+
+        .hero-title {
+            font-family: 'Tajawal', sans-serif;
+            font-size: 3.2rem;
+            font-weight: 900;
+            line-height: 1.2;
+            margin-bottom: 20px;
+            animation: fadeInDown 0.9s ease;
+        }
+
+        .hero-title .gold {
+            color: var(--gold-light);
+        }
+
+        .hero-desc {
+            color: var(--text-muted);
+            font-size: 1rem;
+            line-height: 1.8;
+            margin-bottom: 32px;
+            animation: fadeInDown 1s ease;
+        }
+
+        .hero-btns {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+            animation: fadeInDown 1.1s ease;
+        }
+
+        .btn-primary {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: linear-gradient(135deg, #25D366, #128C7E);
+            color: white;
+            text-decoration: none;
+            padding: 14px 28px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 0.95rem;
+            transition: all 0.3s;
+            box-shadow: 0 6px 25px rgba(37, 211, 102, 0.35);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(37, 211, 102, 0.5);
+        }
+
+        .btn-secondary {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(200, 149, 42, 0.15);
+            border: 1px solid rgba(200, 149, 42, 0.4);
+            color: var(--gold-light);
+            text-decoration: none;
+            padding: 14px 28px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(200, 149, 42, 0.25);
+            transform: translateY(-3px);
+        }
+
+        /* Hero visual */
+        .hero-visual {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+            animation: fadeInRight 1s ease;
+        }
+
+        .animal-card {
+            background: rgba(17, 34, 64, 0.8);
+            border: 1px solid rgba(200, 149, 42, 0.2);
+            border-radius: 16px;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .animal-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+        }
+
+        .animal-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(200, 149, 42, 0.5);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .animal-card.wide {
+            grid-column: span 2;
+        }
+
+        .animal-emoji {
+            font-size: 2.5rem;
+            margin-bottom: 8px;
+        }
+
+        .animal-name {
+            font-weight: 700;
+            font-size: 0.95rem;
+            color: var(--gold-light);
+        }
+
+        .animal-desc {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+
+        /* ===== STATS ===== */
+        .stats-bar {
+            background: linear-gradient(135deg, var(--dark-2), var(--dark-3));
+            border-top: 1px solid rgba(200, 149, 42, 0.2);
+            border-bottom: 1px solid rgba(200, 149, 42, 0.2);
+            padding: 40px 2rem;
+        }
+
+        .stats-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            text-align: center;
+        }
+
+        .stat-item {
+            padding: 20px;
+        }
+
+        .stat-number {
+            font-family: 'Tajawal', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: var(--gold-light);
+            line-height: 1;
+        }
+
+        .stat-label {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            margin-top: 6px;
+        }
+
+        /* ===== SECTIONS ===== */
+        section {
+            padding: 80px 2rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .section-tag {
+            display: inline-block;
+            background: rgba(200, 149, 42, 0.15);
+            border: 1px solid rgba(200, 149, 42, 0.3);
+            color: var(--gold);
+            font-size: 0.78rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            padding: 5px 14px;
+            border-radius: 4px;
+            margin-bottom: 14px;
+        }
+
+        .section-title {
+            font-family: 'Tajawal', sans-serif;
+            font-size: 2.2rem;
+            font-weight: 900;
+            margin-bottom: 12px;
+        }
+
+        .section-title .gold {
+            color: var(--gold-light);
+        }
+
+        .section-desc {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.7;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* ===== PRODUCTS ===== */
+        #products {
+            background: var(--dark-2);
+        }
+
+        .categories-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 40px;
+        }
+
+        .tab-btn {
+            padding: 9px 20px;
+            border-radius: 50px;
+            border: 1px solid rgba(200, 149, 42, 0.3);
+            background: transparent;
+            color: var(--text-muted);
+            font-family: 'Cairo', sans-serif;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .tab-btn.active,
+        .tab-btn:hover {
+            background: var(--gold);
+            color: var(--dark);
+            border-color: var(--gold);
+            font-weight: 700;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 24px;
+        }
+
+        .product-card {
+            background: var(--dark);
+            border: 1px solid rgba(200, 149, 42, 0.15);
+            border-radius: 18px;
+            overflow: hidden;
+            transition: all 0.35s;
+        }
+
+        .product-card:hover {
+            transform: translateY(-6px);
+            border-color: rgba(200, 149, 42, 0.5);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+        }
+
+        .product-img {
+            height: 160px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            background: linear-gradient(135deg, rgba(200, 149, 42, 0.08), rgba(17, 34, 64, 0.8));
+            position: relative;
+        }
+
+        .product-badge {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: var(--gold);
+            color: var(--dark);
+            font-size: 0.7rem;
+            font-weight: 700;
+            padding: 3px 10px;
+            border-radius: 50px;
+        }
+
+        .product-body {
+            padding: 18px;
+        }
+
+        .product-name {
+            font-weight: 700;
+            font-size: 0.95rem;
+            margin-bottom: 6px;
+        }
+
+        .product-desc {
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            line-height: 1.6;
+            margin-bottom: 14px;
+        }
+
+        .product-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .product-tag {
+            font-size: 0.72rem;
+            color: var(--gold);
+            background: rgba(200, 149, 42, 0.1);
+            padding: 3px 10px;
+            border-radius: 4px;
+        }
+
+        .product-whatsapp {
+            width: 36px;
+            height: 36px;
+            background: #25D366;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+        }
+
+        .product-whatsapp:hover {
+            transform: scale(1.1);
+        }
+
+        /* ===== FREEZING SECTION ===== */
+        .freezing-section {
+            background: linear-gradient(135deg, var(--dark-3) 0%, var(--dark-2) 100%);
+            border: 1px solid rgba(30, 136, 229, 0.25);
+            border-radius: 24px;
+            padding: 50px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+            margin: 0 auto;
+            max-width: 1200px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .freezing-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(30, 136, 229, 0.1), transparent 70%);
+            border-radius: 50%;
+        }
+
+        .freezing-icon {
+            font-size: 4rem;
+            margin-bottom: 16px;
+        }
+
+        .freezing-title {
+            font-family: 'Tajawal', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: var(--accent);
+            margin-bottom: 16px;
+        }
+
+        .freezing-features {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .freezing-features li {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .freezing-features li .check {
+            width: 22px;
+            height: 22px;
+            background: rgba(30, 136, 229, 0.2);
+            border: 1px solid rgba(30, 136, 229, 0.5);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.65rem;
+            flex-shrink: 0;
+            color: var(--accent);
+        }
+
+        .freezing-specs {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .spec-card {
+            background: rgba(10, 22, 40, 0.7);
+            border: 1px solid rgba(30, 136, 229, 0.2);
+            border-radius: 14px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .spec-icon {
+            font-size: 2rem;
+            margin-bottom: 8px;
+        }
+
+        .spec-val {
+            font-weight: 800;
+            font-size: 1.1rem;
+            color: var(--accent);
+        }
+
+        .spec-label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+
+        /* ===== WHATSAPP FORM ===== */
+        #contact {
+            background: var(--dark);
+        }
+
+        .contact-wrapper {
+            max-width: 700px;
+            margin: 0 auto;
+            background: var(--dark-2);
+            border: 1px solid rgba(200, 149, 42, 0.2);
+            border-radius: 24px;
+            padding: 48px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .contact-wrapper::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #25D366, #128C7E, #25D366);
+            background-size: 200%;
+            animation: shimmer 3s infinite;
+        }
+
+        @keyframes shimmer {
+            0% {
+                background-position: -200% center;
+            }
+
+            100% {
+                background-position: 200% center;
+            }
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+            margin-bottom: 18px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 7px;
+        }
+
+        .form-group.full {
+            grid-column: span 2;
+        }
+
+        label {
+            font-size: 0.83rem;
+            font-weight: 600;
+            color: var(--gold-light);
+        }
+
+        input,
+        select,
+        textarea {
+            background: rgba(10, 22, 40, 0.8);
+            border: 1px solid rgba(200, 149, 42, 0.25);
+            border-radius: 10px;
+            padding: 12px 16px;
+            color: var(--white);
+            font-family: 'Cairo', sans-serif;
+            font-size: 0.9rem;
+            transition: border-color 0.3s;
+            outline: none;
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            border-color: var(--gold);
+            box-shadow: 0 0 0 3px rgba(200, 149, 42, 0.1);
+        }
+
+        input::placeholder,
+        textarea::placeholder {
+            color: var(--text-muted);
+        }
+
+        select option {
+            background: var(--dark-2);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .interests-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-top: 4px;
+        }
+
+        .interest-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(10, 22, 40, 0.6);
+            border: 1px solid rgba(200, 149, 42, 0.2);
+            border-radius: 8px;
+            padding: 9px 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.82rem;
+        }
+
+        .interest-item input[type="checkbox"] {
+            display: none;
+        }
+
+        .interest-item.checked {
+            background: rgba(200, 149, 42, 0.15);
+            border-color: var(--gold);
+            color: var(--gold-light);
+        }
+
+        .interest-check {
+            width: 18px;
+            height: 18px;
+            border: 1.5px solid rgba(200, 149, 42, 0.4);
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            flex-shrink: 0;
+        }
+
+        .interest-item.checked .interest-check {
+            background: var(--gold);
+            border-color: var(--gold);
+            color: var(--dark);
+        }
+
+        .wa-submit-btn {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, #25D366, #128C7E);
+            border: none;
+            border-radius: 12px;
+            color: white;
+            font-family: 'Cairo', sans-serif;
+            font-weight: 800;
+            font-size: 1.05rem;
+            cursor: pointer;
+            margin-top: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            transition: all 0.3s;
+            box-shadow: 0 6px 25px rgba(37, 211, 102, 0.35);
+        }
+
+        .wa-submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 14px 40px rgba(37, 211, 102, 0.5);
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            background: var(--dark-2);
+            border-top: 1px solid rgba(200, 149, 42, 0.2);
+            padding: 50px 2rem 24px;
+        }
+
+        .footer-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-top {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-brand .logo-text {
+            font-size: 1.2rem;
+        }
+
+        .footer-brand p {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            line-height: 1.7;
+            margin-top: 14px;
+        }
+
+        .footer-col h4 {
+            color: var(--gold-light);
+            font-weight: 700;
+            margin-bottom: 14px;
+            font-size: 0.9rem;
+        }
+
+        .footer-col ul {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .footer-col ul li a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.83rem;
+            transition: color 0.3s;
+        }
+
+        .footer-col ul li a:hover {
+            color: var(--gold-light);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            padding-top: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 0.78rem;
+            color: var(--text-muted);
+        }
+
+        .wa-float {
+            position: fixed;
+            bottom: 28px;
+            left: 28px;
+            z-index: 999;
+            width: 58px;
+            height: 58px;
+            background: #25D366;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.7rem;
+            text-decoration: none;
+            box-shadow: 0 6px 30px rgba(37, 211, 102, 0.5);
+            transition: all 0.3s;
+            animation: pulse-wa 2.5s infinite;
+        }
+
+        .wa-float:hover {
+            transform: scale(1.1);
+        }
+
+        @keyframes pulse-wa {
+
+            0%,
+            100% {
+                box-shadow: 0 6px 30px rgba(37, 211, 102, 0.5);
+            }
+
+            50% {
+                box-shadow: 0 6px 50px rgba(37, 211, 102, 0.8);
+            }
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInRight {
+            from {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* Divider */
+        .divider {
+            border: none;
+            border-top: 1px solid rgba(200, 149, 42, 0.15);
+            margin: 0;
+        }
+
+        /* Mobile */
+        @media (max-width: 900px) {
+            .hero-content {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-visual {
+                display: none;
+            }
+
+            .hero-title {
+                font-size: 2.2rem;
+            }
+
+            .stats-inner {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .freezing-section {
+                grid-template-columns: 1fr;
+                padding: 30px;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-group.full {
+                grid-column: span 1;
+            }
+
+            .footer-top {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            nav {
+                display: none;
+            }
+
+            .interests-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- WhatsApp Float -->
+    <a href="#" class="wa-float" onclick="openWhatsApp(); return false;" title="تواصل معنا عبر واتساب">💬</a>
+
+    <!-- HEADER -->
+    <header>
+        <div class="logo-area">
+            <div class="logo-icon">🐓</div>
+            <div class="logo-text">
+                المتحدة
+                <span>لمعدات الدواجن ومستلزمات التفريخ</span>
+            </div>
+        </div>
+        <nav>
+            <a href="#home">الرئيسية</a>
+            <a href="#products">المنتجات</a>
+            <a href="#freezing">التجميد</a>
+            <a href="#contact">تواصل معنا</a>
+        </nav>
+        <a href="#contact" class="header-cta">احصل على عرض سعر</a>
+    </header>
+
+    <!-- HERO -->
+    <section class="hero" id="home">
+        <div class="hero-bg"></div>
+        <div class="hero-grid"></div>
+        <div class="hero-content">
+            <div>
+                <div class="hero-badge">🏆 الشريك المثالي لمزارع الدواجن</div>
+                <h1 class="hero-title">
+                    كل ما تحتاجه<br>
+                    <span class="gold">لمزرعتك</span><br>
+                    في مكان واحد
+                </h1>
+                <p class="hero-desc">
+                    نوفر جميع معدات ومستلزمات تربية الدواجن، التفريخ، والذبح والتجميد للدجاج، السكان، البط، الرومان،
+                    والأرانب — بجودة عالية وأسعار تنافسية.
+                </p>
+                <div class="hero-btns">
+                    <a href="#contact" class="btn-primary">
+                        <span>💬</span> تواصل عبر واتساب
+                    </a>
+                    <a href="#products" class="btn-secondary">
+                        <span>📦</span> تصفح المنتجات
+                    </a>
+                </div>
+            </div>
+
+            <div class="hero-visual">
+                <div class="animal-card">
+                    <div class="animal-emoji">🐔</div>
+                    <div class="animal-name">الدجاج</div>
+                    <div class="animal-desc">تربية وتفريخ</div>
+                </div>
+                <div class="animal-card">
+                    <div class="animal-emoji">🦢</div>
+                    <div class="animal-name">السكان</div>
+                    <div class="animal-desc">إوز وبجع</div>
+                </div>
+                <div class="animal-card">
+                    <div class="animal-emoji">🦆</div>
+                    <div class="animal-name">البط</div>
+                    <div class="animal-desc">تربية ومعدات</div>
+                </div>
+                <div class="animal-card">
+                    <div class="animal-emoji">🦃</div>
+                    <div class="animal-name">الرومان</div>
+                    <div class="animal-desc">ديك رومي</div>
+                </div>
+                <div class="animal-card wide">
+                    <div class="animal-emoji">🐰</div>
+                    <div class="animal-name">الأرانب</div>
+                    <div class="animal-desc">جميع مستلزمات التربية</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- STATS -->
+    <div class="stats-bar">
+        <div class="stats-inner">
+            <div class="stat-item">
+                <div class="stat-number">500+</div>
+                <div class="stat-label">منتج متاح</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">20+</div>
+                <div class="stat-label">سنة خبرة</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">1000+</div>
+                <div class="stat-label">عميل موثوق</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">15+</div>
+                <div class="stat-label">دولة نخدمها</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PRODUCTS -->
+    <section id="products">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-tag">📦 منتجاتنا</div>
+                <h2 class="section-title">مستلزمات <span class="gold">شاملة</span> لكل نوع</h2>
+                <p class="section-desc">من بيض التفريخ إلى خطوط الذبح، نوفر كل ما تحتاجه مزرعتك</p>
+            </div>
+
+            <div class="categories-tabs">
+                <button class="tab-btn active" onclick="filterProducts('all', this)">الكل</button>
+                <button class="tab-btn" onclick="filterProducts('incubation', this)">🥚 التفريخ</button>
+                <button class="tab-btn" onclick="filterProducts('feeding', this)">🌾 التغذية</button>
+                <button class="tab-btn" onclick="filterProducts('housing', this)">🏠 الإسكان</button>
+                <button class="tab-btn" onclick="filterProducts('slaughter', this)">🔪 الذبح</button>
+                <button class="tab-btn" onclick="filterProducts('freezing', this)">❄️ التجميد</button>
+                <button class="tab-btn" onclick="filterProducts('health', this)">💊 الصحة</button>
+            </div>
+
+            <div class="products-grid" id="productsGrid">
+                <!-- Products inserted by JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- FREEZING -->
+    <section id="freezing" style="background: var(--dark-2);">
+        <div class="freezing-section">
+            <div>
+                <div class="freezing-icon">❄️</div>
+                <div class="freezing-title">خط التجميد المتكامل</div>
+                <p style="color: var(--text-muted); font-size: 0.9rem; line-height: 1.8; margin-bottom: 24px;">
+                    نوفر أحدث معدات تجميد الطيور المذبوحة بأنظمة مطابقة للمعايير الدولية، مع ضمان الحفاظ على الجودة
+                    والطازجية طوال سلسلة التبريد.
+                </p>
+                <ul class="freezing-features">
+                    <li><span class="check">✓</span> أنظمة تجميد سريع IQF للطيور المذبوحة</li>
+                    <li><span class="check">✓</span> غرف تبريد وتجميد بمختلف السعات</li>
+                    <li><span class="check">✓</span> سيور نقل وتعبئة آلية</li>
+                    <li><span class="check">✓</span> معدات تعبئة وتغليف تحت الفراغ</li>
+                    <li><span class="check">✓</span> أنظمة مراقبة درجة الحرارة الذكية</li>
+                    <li><span class="check">✓</span> صيانة وخدمة ما بعد البيع</li>
+                </ul>
+            </div>
+            <div class="freezing-specs">
+                <div class="spec-card">
+                    <div class="spec-icon">🌡️</div>
+                    <div class="spec-val">-40°C</div>
+                    <div class="spec-label">أقصى درجة تجميد</div>
+                </div>
+                <div class="spec-card">
+                    <div class="spec-icon">⚡</div>
+                    <div class="spec-val">IQF</div>
+                    <div class="spec-label">تجميد فردي سريع</div>
+                </div>
+                <div class="spec-card">
+                    <div class="spec-icon">📦</div>
+                    <div class="spec-val">5 طن</div>
+                    <div class="spec-label">سعة يومية</div>
+                </div>
+                <div class="spec-card">
+                    <div class="spec-icon">✅</div>
+                    <div class="spec-val">HACCP</div>
+                    <div class="spec-label">معتمد دولياً</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACT / WHATSAPP FORM -->
+    <section id="contact">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-tag">💬 تواصل معنا</div>
+                <h2 class="section-title">أرسل بياناتك <span class="gold">عبر واتساب</span></h2>
+                <p class="section-desc">سجّل بياناتك واهتماماتك وسيتواصل معك فريقنا فوراً</p>
+            </div>
+
+            <div class="contact-wrapper">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>الاسم الكامل *</label>
+                        <input type="text" id="fullName" placeholder="أدخل اسمك الكامل">
+                    </div>
+                    <div class="form-group">
+                        <label>رقم الواتساب *</label>
+                        <input type="tel" id="phone" placeholder="+20 / +966 / +971 ...">
+                    </div>
+                    <div class="form-group">
+                        <label>البلد *</label>
+                        <select id="country">
+                            <option value="">اختر بلدك</option>
+                            <option>مصر</option>
+                            <option>المملكة العربية السعودية</option>
+                            <option>الإمارات العربية المتحدة</option>
+                            <option>الكويت</option>
+                            <option>قطر</option>
+                            <option>البحرين</option>
+                            <option>عُمان</option>
+                            <option>الأردن</option>
+                            <option>العراق</option>
+                            <option>سوريا</option>
+                            <option>لبنان</option>
+                            <option>ليبيا</option>
+                            <option>تونس</option>
+                            <option>الجزائر</option>
+                            <option>المغرب</option>
+                            <option>السودان</option>
+                            <option>اليمن</option>
+                            <option>فلسطين</option>
+                            <option>أخرى</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>نوع النشاط</label>
+                        <select id="activity">
+                            <option value="">اختر نوع نشاطك</option>
+                            <option>مزرعة إنتاج</option>
+                            <option>مزرعة تفريخ</option>
+                            <option>مجزرة تجارية</option>
+                            <option>مصنع تجميد</option>
+                            <option>موزع / تاجر</option>
+                            <option>مبتدئ</option>
+                            <option>أخرى</option>
+                        </select>
+                    </div>
+                    <div class="form-group full">
+                        <label>مجالات الاهتمام *</label>
+                        <div class="interests-grid" id="interestsGrid">
+                            <div class="interest-item" onclick="toggleInterest(this, '🥚 أجهزة تفريخ')">
+                                <span class="interest-check">✓</span> 🥚 أجهزة تفريخ
+                            </div>
+                            <div class="interest-item" onclick="toggleInterest(this, '🐔 تربية دجاج')">
+                                <span class="interest-check">✓</span> 🐔 تربية دجاج
+                            </div>
+                            <div class="interest-item" onclick="toggleInterest(this, '🦢 تربية سكان')">
+                                <span class="interest-check">✓</span> 🦢 تربية سكان
+                            </div>
+                            <div class="interest-item" onclick="toggleInterest(this, '🦆 تربية بط')">
+                                <span class="interest-check">✓</span> 🦆 تربية بط
+                            </div>
+                            <div class="interest-item" onclick="toggleInterest(this, '🦃 تربية رومان')">
+                                <span class="interest-check">✓</span> 🦃 تربية رومان
+                            </div>
+                            <div class="interest-item" onclick="toggleInterest(this, '🐰 تربية أرانب')">
+                                <span class="interest-check">✓</span> 🐰 تربية أرانب
+                            </div>
+                            <div class="interest-item" onclick="toggleInterest(this, '🔪 معدات ذبح')">
+                                <span class="interest-check">✓</span> 🔪 معدات ذبح
+                            </div>
+                            <div class="interest-item" onclick="toggleInterest(this, '❄️ خطوط تجميد')">
+                                <span class="interest-check">✓</span> ❄️ خطوط تجميد
+                            </div>
+                            <div class="interest-item" onclick="toggleInterest(this, '🌾 أعلاف ومغذيات')">
+                                <span class="interest-check">✓</span> 🌾 أعلاف ومغذيات
+                            </div>
+                            <div class="interest-item" onclick="toggleInterest(this, '💊 صحة وتطعيمات')">
+                                <span class="interest-check">✓</span> 💊 صحة وتطعيمات
+                            </div>
+                            <div class="interest-item" onclick="toggleInterest(this, '🏠 أقفاص وعنابر')">
+                                <span class="interest-check">✓</span> 🏠 أقفاص وعنابر
+                            </div>
+                            <div class="interest-item" onclick="toggleInterest(this, '📊 استشارة فنية')">
+                                <span class="interest-check">✓</span> 📊 استشارة فنية
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group full">
+                        <label>ملاحظات أو استفسار إضافي</label>
+                        <textarea id="message" placeholder="اكتب استفساراتك أو احتياجاتك هنا..."></textarea>
+                    </div>
+                </div>
+
+                <button class="wa-submit-btn" onclick="sendToWhatsApp()">
+                    <span>💬</span> إرسال البيانات عبر واتساب الآن
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-inner">
+            <div class="footer-top">
+                <div class="footer-brand">
+                    <div class="logo-area">
+                        <div class="logo-icon">🐓</div>
+                        <div class="logo-text">
+                            المتحدة
+                            <span>لمعدات الدواجن ومستلزمات التفريخ</span>
+                        </div>
+                    </div>
+                    <p>نحن شركة متخصصة في توفير جميع معدات ومستلزمات الدواجن والأرانب، من التفريخ حتى التجميد، بأعلى
+                        معايير الجودة والخدمة.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>المنتجات</h4>
+                    <ul>
+                        <li><a href="#">أجهزة تفريخ</a></li>
+                        <li><a href="#">معدات تغذية</a></li>
+                        <li><a href="#">أقفاص وعنابر</a></li>
+                        <li><a href="#">خطوط ذبح</a></li>
+                        <li><a href="#">خطوط تجميد</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>الحيوانات</h4>
+                    <ul>
+                        <li><a href="#">الدجاج 🐔</a></li>
+                        <li><a href="#">السكان 🦢</a></li>
+                        <li><a href="#">البط 🦆</a></li>
+                        <li><a href="#">الرومان 🦃</a></li>
+                        <li><a href="#">الأرانب 🐰</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>تواصل معنا</h4>
+                    <ul>
+                        <li><a href="#contact">واتساب</a></li>
+                        <li><a href="#">البريد الإلكتروني</a></li>
+                        <li><a href="#">طلب كتالوج</a></li>
+                        <li><a href="#">طلب عرض سعر</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <span>© 2025 المتحدة لمعدات الدواجن ومستلزمات التفريخ — جميع الحقوق محفوظة</span>
+                <span>صُنع بـ ❤️ لخدمة مربي الدواجن العرب</span>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // ===== PRODUCTS DATA =====
+        const products = [
+            { id: 1, emoji: '🥚', name: 'فقاسة بيض دجاج تلقائية', desc: 'سعة 528 بيضة، تحكم رقمي كامل في الحرارة والرطوبة والتقليب', tag: 'تفريخ', cat: 'incubation', badge: 'الأكثر مبيعاً' },
+            { id: 2, emoji: '🥚', name: 'فقاسة سكان وبط', desc: 'مصممة خصيصاً لبيض الأوز والبط، مع تحكم بالرطوبة العالية', tag: 'تفريخ', cat: 'incubation', badge: '' },
+            { id: 3, emoji: '🌡️', name: 'منظم حرارة رقمي', desc: 'تحكم دقيق في درجة الحرارة مع إنذار للانحراف عن المعدل', tag: 'تفريخ', cat: 'incubation', badge: '' },
+            { id: 4, emoji: '🌾', name: 'معلفة أوتوماتيك دجاج', desc: 'سعات متعددة، مقاومة للصدأ، موزعة بالتساوي على الطيور', tag: 'تغذية', cat: 'feeding', badge: '' },
+            { id: 5, emoji: '💧', name: 'نبابيت مياه دواجن', desc: 'نظام شرب بالنبابيت يمنع تبليل الفرشة ويقلل الهدر', tag: 'تغذية', cat: 'feeding', badge: 'توفير مياه' },
+            { id: 6, emoji: '🏠', name: 'أقفاص دجاج بياض', desc: 'أقفاص متعددة الأدوار مجلفنة مقاومة للصدأ', tag: 'إسكان', cat: 'housing', badge: '' },
+            { id: 7, emoji: '🐰', name: 'عنابر أرانب تهوية', desc: 'أقفاص أرانب من سلك مجلفن مع صواني تجميع وتهوية طبيعية', tag: 'إسكان', cat: 'housing', badge: '' },
+            { id: 8, emoji: '🔪', name: 'خط ذبح دواجن آلي', desc: 'خط متكامل: الشنق، الصعق، الذبح، السلخ، التنظيف', tag: 'ذبح', cat: 'slaughter', badge: 'متكامل' },
+            { id: 9, emoji: '🪶', name: 'ريشة نتف آلية', desc: 'ماكينة نتف ريش بأصابع مطاط عالية الجودة لجميع أحجام الطيور', tag: 'ذبح', cat: 'slaughter', badge: '' },
+            { id: 10, emoji: '❄️', name: 'غرفة تبريد متنقلة', desc: 'سعة 5 طن، درجة حرارة من -5 إلى -25، عازلة عالية الكفاءة', tag: 'تجميد', cat: 'freezing', badge: 'جديد' },
+            { id: 11, emoji: '🧊', name: 'نفق تجميد IQF', desc: 'تجميد فردي سريع بتقنية Spiral Freezer بسعة 1-5 طن/ساعة', tag: 'تجميد', cat: 'freezing', badge: 'تجميد سريع' },
+            { id: 12, emoji: '💊', name: 'طقم تطعيم ونقارة', desc: 'نقارات وأجهزة تطعيم القطرة والرذاذ للقطعان الكبيرة', tag: 'الصحة', cat: 'health', badge: '' },
+        ];
+
+        let currentFilter = 'all';
+
+        function renderProducts() {
+            const grid = document.getElementById('productsGrid');
+            const filtered = currentFilter === 'all' ? products : products.filter(p => p.cat === currentFilter);
+            grid.innerHTML = filtered.map(p => `
+    <div class="product-card">
+      <div class="product-img">
+        <span>${p.emoji}</span>
+        ${p.badge ? `<span class="product-badge">${p.badge}</span>` : ''}
+      </div>
+      <div class="product-body">
+        <div class="product-name">${p.name}</div>
+        <div class="product-desc">${p.desc}</div>
+        <div class="product-footer">
+          <span class="product-tag">${p.tag}</span>
+          <a href="#" class="product-whatsapp" onclick="askProduct('${p.name}'); return false;" title="استفسار عبر واتساب">💬</a>
+        </div>
+      </div>
+    </div>
+  `).join('');
+        }
+
+        function filterProducts(cat, btn) {
+            currentFilter = cat;
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            renderProducts();
+        }
+
+        renderProducts();
+
+        // ===== INTERESTS =====
+        const selectedInterests = new Set();
+
+        function toggleInterest(el, val) {
+            el.classList.toggle('checked');
+            if (el.classList.contains('checked')) selectedInterests.add(val);
+            else selectedInterests.delete(val);
+        }
+
+        // ===== WHATSAPP =====
+        const WA_NUMBER = '201000000000'; // ← ضع رقم واتساب الشركة هنا
+
+        function sendToWhatsApp() {
+            const name = document.getElementById('fullName').value.trim();
+            const phone = document.getElementById('phone').value.trim();
+            const country = document.getElementById('country').value;
+            const activity = document.getElementById('activity').value;
+            const message = document.getElementById('message').value.trim();
+
+            if (!name || !phone || !country) {
+                alert('⚠️ يرجى تعبئة الاسم ورقم الواتساب والبلد على الأقل');
+                return;
+            }
+
+            const interests = [...selectedInterests].join('، ') || 'لم يتم التحديد';
+
+            const text = `🐓 *رسالة جديدة من موقع المتحدة*\n\n` +
+                `👤 *الاسم:* ${name}\n` +
+                `📱 *الواتساب:* ${phone}\n` +
+                `🌍 *البلد:* ${country}\n` +
+                `🏭 *نوع النشاط:* ${activity || 'غير محدد'}\n\n` +
+                `✅ *مجالات الاهتمام:*\n${interests}\n\n` +
+                (message ? `💬 *ملاحظات:*\n${message}\n\n` : '') +
+                `─────────────────\n` +
+                `📌 أرسل عبر الموقع الرسمي`;
+
+            const url = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(text)}`;
+            window.open(url, '_blank');
+        }
+
+        function openWhatsApp() {
+            window.open(`https://wa.me/${WA_NUMBER}?text=${encodeURIComponent('السلام عليكم، أود الاستفسار عن منتجاتكم 🐓')}`, '_blank');
+        }
+
+        function askProduct(name) {
+            window.open(`https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(`السلام عليكم، أود الاستفسار عن: ${name}`)}`, '_blank');
+        }
+
+        // Animate on scroll
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(e => {
+                if (e.isIntersecting) {
+                    e.target.style.opacity = '1';
+                    e.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.product-card, .animal-card, .spec-card').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(20px)';
+            el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+            observer.observe(el);
+        });
+    </script>
+</body>
+
+</html>
